@@ -1,6 +1,6 @@
 <!DOCTYPE html><html class="" lang=""><head><script type="text/javascript" class="silex-json-styles" data-silex-static="">
     window.silex = window.silex || {}
-    window.silex.data = {"site":{"width":1230},"pages":[{"id":"page-page-1","displayName":"Page 1","link":{"linkType":"LinkTypePage","href":"#!page-page-1"},"canDelete":true,"canProperties":true,"canMove":true,"canRename":true,"opened":false}]}</script>
+    window.silex.data = {"site":{"width":1200},"pages":[{"id":"page-page-1","displayName":"Page 1","link":{"linkType":"LinkTypePage","href":"#!page-page-1"},"canDelete":true,"canProperties":true,"canMove":true,"canRename":true,"opened":false}]}</script>
     <meta charset="UTF-8">
     <!-- generator meta tag -->
     <!-- leave this for stats and Silex version check -->
@@ -13,14 +13,267 @@
     <link rel="stylesheet" href="https://editor.silex.me/static/2.12/normalize.css" data-silex-static="">
     <link rel="stylesheet" href="https://editor.silex.me/static/2.12/front-end.css" data-silex-static="">
 
-    <style class="silex-style"></style>
-    <script type="text/javascript" class="silex-script"></script>
-    <style class="silex-inline-styles">.body-initial {background-color: rgba(255,255,255,1); position: static;}.silex-id-1478366444112-1 {background-color: transparent; position: static; margin-top: -1px;}.silex-id-1478366444112-0 {background-color: transparent; min-height: 100px; position: relative; margin-left: auto; margin-right: auto;}.silex-id-1474394621033-3 {position: static; margin-top: -1px;}.silex-id-1474394621032-2 {background-color: transparent; min-height: 600px; position: relative; margin-left: auto; margin-right: auto;}.silex-id-1478366450713-3 {background-color: transparent; position: static; margin-top: -1px;}.silex-id-1478366450713-2 {background-color: transparent; min-height: 231px; position: relative; margin-left: auto; margin-right: auto;}.silex-id-1442914737143-3 {width: 973px; top: 105px; left: -1px; min-height: 127px; position: absolute;}.silex-id-1681997075720-0 {width: 678px; min-height: 445px; position: absolute; top: 75px; left: 50px;}.silex-id-1681998307738-15 {width: 2226px; height: 1047px; position: absolute; top: -89px; left: -660px;}@media only screen and (max-width: 480px) {.silex-id-1442914737143-3 {min-height: 127px; top: -607px; left: 0px; width: 464px;}.silex-id-1681998307738-15 {height: 1083px; top: -59px; left: 0px; width: 464px;}}</style>
+    <style class="silex-style">.player {position: absolute; bottom: 0; transform: translateY(0); transition: transform 0.2s ease-in-out;}.player.falling {transform: translateY(100px);}.wall {position: absolute; background-color: maroon;}.laser {position: absolute; height: 5px; width: 20px; background-color: blue; display: background;}</style>
+    <script type="text/javascript" class="silex-script">// JavaScript
+const player = document.querySelector('.player');
+const walls = document.querySelectorAll('.wall');
+const laser = document.querySelector('.laser');
+
+let x = 0;
+let y = 0;
+let laserActive = false;
+
+function movePlayer() {
+  player.style.transform = `translate(${x}px, ${y}px)`;
+  
+  if (laserActive) {
+    laser.style.transform = `translate(${x}px, ${y}px) rotate(${Math.atan2(y, x)}rad)`;
+  }
+  
+  requestAnimationFrame(movePlayer);
+}
+
+function detectCollision() {
+  walls.forEach((wall) => {
+    if (isColliding(player, wall)) {
+      console.log('Collision detected!');
+    }
+  });
+  
+  requestAnimationFrame(detectCollision);
+}
+
+function isColliding(a, b) {
+  const aRect = a.getBoundingClientRect();
+  const bRect = b.getBoundingClientRect();
+  
+  return !(
+    (aRect.bottom < bRect.top) ||
+    (aRect.top > bRect.bottom) ||
+    (aRect.right < bRect.left) ||
+    (aRect.left > bRect.right)
+  );
+}
+
+document.addEventListener('keydown', (event) => {
+  switch(event.key) {
+    case 'ArrowUp':
+      y -= 10;
+      break;
+    case 'ArrowDown':
+      y += 10;
+      break;
+    case 'ArrowLeft':
+      x -= 10;
+      break;
+    case 'ArrowRight':
+      x += 10;
+      break;
+    case ' ':
+      laserActive = true;
+      laser.style.display = 'block';
+      break;
+  }
+});
+
+document.addEventListener('keyup', (event) => {
+  if (event.key === ' ') {
+    laserActive = false;
+    laser.style.display = 'none';
+  }
+});
+
+requestAnimationFrame(movePlayer);
+requestAnimationFrame(detectCollision);
+</script>
+    <style class="silex-inline-styles">.body-initial {background-color: rgba(255,255,255,1); position: static;}.silex-id-1478366444112-1 {background-color: transparent; position: static; margin-top: -1px;}.silex-id-1478366444112-0 {background-color: transparent; min-height: 100px; position: relative; margin-left: auto; margin-right: auto;}.silex-id-1474394621033-3 {position: static; margin-top: -1px;}.silex-id-1474394621032-2 {background-color: transparent; min-height: 600px; position: relative; margin-left: auto; margin-right: auto;}.silex-id-1478366450713-3 {background-color: transparent; position: static; margin-top: -1px;}.silex-id-1478366450713-2 {background-color: transparent; min-height: 110px; position: relative; margin-left: auto; margin-right: auto;}.silex-id-1442914737143-3 {width: 241px; top: 26px; left: 494px; min-height: 51px; position: absolute;}@media only screen and (max-width: 480px) {}</style>
     <title></title>
     
 
     
-<style class="silex-prodotype-style" data-style-id="all-style">.text-element > .silex-element-content {font-family: 'Roboto', sans-serif;}</style><meta name="viewport" content="width=device-width, initial-scale=1"><style class="silex-style-settings">.website-width {width: 1230px;}@media (min-width: 481px) {.silex-editor {min-width: 1430px;}}</style><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" class="silex-custom-font"><link href="https://fonts.google.com/specimen/Tinos" rel="stylesheet" class="silex-custom-font"></head>
+<style class="silex-prodotype-style" data-style-id="all-style">.text-element > .silex-element-content {font-family: 'Roboto', sans-serif;}</style><link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" class="silex-custom-font"><meta name="viewport" content="width=device-width, initial-scale=1"><style class="silex-style-settings">.website-width {width: 1200px;}@media (min-width: 481px) {.silex-editor {min-width: 1400px;}}</style><!-- Silex HEAD tag do not remove --><!DOCTYPE html>
+<html>
+<head>
+	<title>Laser Game</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: green;
+			overflow: hidden;
+		}
+		#player {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			width: 20px;
+			height: 20px;
+			background-color: blue
+     ;
+			border-radius: 50%;
+		}
+		#laser {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 5px;
+			height: 100%;
+			background-color: red;
+			visibility: visible;
+		}
+		#wall {
+			position: absolute;
+			background-color: white;
+		}
+		#wall1 {
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 10px;
+		}
+		#wall2 {
+			top: 0;
+			right: 0;
+			width: 10px;
+			height: 100%;
+		}
+		#wall3 {
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 10px;
+		}
+		#wall4 {
+			top: 0;
+			left: 0;
+			width: 10px;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div id="player"></div>
+	<div id="laser"></div>
+	<div id="wall1" class="wall"></div>
+	<div id="wall2" class="wall"></div>
+	<div id="wall3" class="wall"></div>
+	<div id="wall4" class="wall"></div>
+	<script>
+		// get the player and laser elements from the DOM
+		const player = document.getElementById("player");
+		const laser = document.getElementById("laser");
+		// get the walls from the DOM
+		const walls = document.querySelectorAll(".wall");
+		// set the initial position of the laser
+		let laserX = 0;
+		let laserY = 0;
+		// set the speed of the laser
+		const laserSpeed = 10;
+		// set the direction of the laser
+		let laserDirection = "";
+		// set the player's speed
+		const playerSpeed = 5;
+		// set the player's direction
+		let playerDirection = "";
+		// set the player's position
+		let playerX = window.innerWidth / 2;
+		let playerY = window.innerHeight / 2;
+		player.style.top = playerY + "px";
+		player.style.left = playerX + "px";
+		// function to move the player
+		function movePlayer() {
+			if (playerDirection === "up") {
+				playerY -= playerSpeed;
+				player.style.top = playerY + "px";
+			}
+			if (playerDirection === "down") {
+				playerY += playerSpeed;
+				player.style.top = playerY + "px";
+			}
+			if (playerDirection === "left") {
+				playerX -= playerSpeed;
+				player.style.left = playerX + "px";
+			}
+			if (playerDirection === "right") {
+				playerX += playerSpeed;
+				player.style.left = playerX + "px";
+			}
+		}
+		// function to move the laser
+		function moveLaser() {
+			if (laserDirection === "up") {
+				laserY -= laserSpeed;
+				laser.style.top = laserY + "px";
+			}
+			if (laserDirection === "down") {
+				laserY += laserSpeed;
+				laser.style.top = laserY + "px";
+			}
+			if (laserDirection === "left") {
+				laserX -= laserSpeed;
+				laser.style.left = laserX + "px";
+			}
+			if (laserDirection === "right") {
+				laserX += laserSpeed;
+				laser.style.left = laserX + "px";
+			}
+			// check for collision with walls
+			walls.forEach((wall) => {
+				if (
+					laserX < wall.offsetLeft + wall.offsetWidth &&
+					laserX + laser.offsetWidth > wall.offsetLeft &&
+					laserY < wall.offsetTop + wall.offsetHeight &&
+					laserY + laser.offsetHeight > wall.offsetTop
+				) {
+					laser.style.visibility = "hidden";
+				}
+			});
+		}
+		// function to start the game loop
+		function gameLoop() {
+			movePlayer();
+			moveLaser();
+			window.requestAnimationFrame(gameLoop);
+		}
+		// listen for keyboard events to move the player
+		document.addEventListener("keydown", (event) => {
+			if (event.key === "ArrowUp") {
+				playerDirection = "up";
+			}
+			if (event.key === "ArrowDown") {
+				playerDirection = "down";
+			}
+			if (event.key === "ArrowLeft") {
+				playerDirection = "left";
+			}
+			if (event.key === "ArrowRight") {
+				playerDirection = "right";
+			}
+			if (event.key === " ") {
+				laserDirection = "up";
+				laserX = playerX + player.offsetWidth / 2 - laser.offsetWidth / 2;
+				laserY = playerY;
+				laser.style.visibility = "visible";
+				laser.style.top = laserY + "px";
+				laser.style.left = laserX + "px";
+			}
+		});
+		document.addEventListener("keyup", (event) => {
+			if (
+				event.key === "ArrowUp" ||
+				event.key === "ArrowDown" ||
+				event.key === "ArrowLeft" ||
+				event.key === "ArrowRight"
+			) {
+				playerDirection = "";
+			}
+		});
+		// start the game loop
+		window.requestAnimationFrame(gameLoop);
+	</script>
+</body>
+</html><!-- End of Silex HEAD tag do not remove --></head>
 
 <body data-silex-id="body-initial" class="body-initial all-style enable-mobile prevent-resizable prevent-selectable editable-style silex-runtime" data-silex-type="container-element" style="">
     
@@ -33,9 +286,20 @@
 
 
 
-    
-    
-    
+    <section data-silex-type="container-element" class="container-element editable-style silex-id-1478366444112-1 section-element prevent-resizable page-page-1 paged-element" data-silex-id="silex-id-1478366444112-1">
+        <div data-silex-type="container-element" class="editable-style silex-element-content silex-id-1478366444112-0 container-element website-width" data-silex-id="silex-id-1478366444112-0"></div>
+    </section>
+    <section data-silex-type="container-element" class="container-element editable-style silex-id-1474394621033-3 section-element prevent-resizable page-page-1 paged-element" data-silex-id="silex-id-1474394621033-3">
+        <div data-silex-type="container-element" class="editable-style silex-element-content silex-id-1474394621032-2 container-element website-width selected" data-silex-id="silex-id-1474394621032-2"></div>
+    </section>
+    <section data-silex-type="container-element" class="container-element editable-style silex-id-1478366450713-3 section-element prevent-resizable page-page-1 paged-element" data-silex-id="silex-id-1478366450713-3">
+        <div data-silex-type="container-element" class="editable-style silex-element-content silex-id-1478366450713-2 container-element website-width" data-silex-id="silex-id-1478366450713-2" style="">
+
+            <div data-silex-id="silex-id-1442914737143-3" class="editable-style silex-id-1442914737143-3 text-element" data-silex-type="text-element">
+                <div class="silex-element-content normal"><p>Powered by <a href="https://www.silex.me/" target="_blank" title="Silex website builder,  free and open source" linktype="LinkTypeExternal">Silex website builder</a></p></div>
+            </div>
+        </div>
+    </section>
 
 
 
@@ -52,15 +316,4 @@
 
 
 
-<section data-silex-type="container-element" class="container-element editable-style silex-id-1478366444112-1 section-element prevent-resizable page-page-1 paged-element" data-silex-id="silex-id-1478366444112-1">
-        
-    <div data-silex-type="container-element" class="editable-style silex-element-content silex-id-1478366444112-0 container-element website-width" data-silex-id="silex-id-1478366444112-0"></div></section><section data-silex-type="container-element" class="container-element editable-style silex-id-1474394621033-3 section-element prevent-resizable page-page-1 paged-element" data-silex-id="silex-id-1474394621033-3" style="">
-        
-    <div data-silex-type="container-element" class="editable-style silex-element-content silex-id-1474394621032-2 container-element website-width selected" data-silex-id="silex-id-1474394621032-2" style=""><div data-silex-type="image-element" class="editable-style image-element silex-id-1681998307738-15" data-silex-id="silex-id-1681998307738-15" style=""><img src="water-fall-calm.gif"></div><div data-silex-type="text-element" class="editable-style text-element silex-id-1681997075720-0" data-silex-id="silex-id-1681997075720-0" style=""><div class="silex-element-content normal"><p><a href="https://www.youtube.com/channel/UCJIC7u5XNbY0jMe4hcMmUUw" title="mi channel">https://www.youtube.com/channel/UCJIC7u5XNbY0jMe4hcMmUUw</a></p><p>it seems you have found me haha. hahahahahHHAHAHHAHAHAHAHAHAHahahhaah ahah a i can code mediocre html HAHAhhahh anyways github cool</p><span class="_wysihtml-temp-caret-fix" style="position: absolute; display: block; min-width: 1px; z-index: 99999;">﻿</span></div></div></div></section><section data-silex-type="container-element" class="container-element editable-style silex-id-1478366450713-3 section-element prevent-resizable page-page-1 paged-element" data-silex-id="silex-id-1478366450713-3">
-        
-    <div data-silex-type="container-element" class="editable-style silex-element-content silex-id-1478366450713-2 container-element website-width" data-silex-id="silex-id-1478366450713-2" style="">
-
-            
-        <div data-silex-id="silex-id-1442914737143-3" class="editable-style silex-id-1442914737143-3 text-element" data-silex-type="text-element" style="">
-                <div class="silex-element-content normal"><p>Powered by ur mother</p></div>
-            </div></div></section></body></html>
+</body></html>
